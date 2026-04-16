@@ -2,7 +2,8 @@
 	"name": "Codespace Main",
 	"image": "mcr.microsoft.com/devcontainers/base:ubuntu",	
 	"features": {
-	  "ghcr.io/devcontainers/features/github-cli:1": {}
+	  "ghcr.io/devcontainers/features/github-cli:1": {},
+	  "ghcr.io/devcontainers/features/docker-in-docker:2": {}
 	},
 	"customizations": {
 	  "vscode": {
@@ -13,9 +14,18 @@
 			"bierner.github-markdown-preview",
 			"hashicorp.terraform",
 			"ritwickdey.LiveServer",
-			"hediet.vscode-drawio"
+			"hediet.vscode-drawio",
+			"amazonwebservices.aws-toolkit-vscode"
 		]
 	  }
+	},
+	"forwardPorts": [4566],
+	"portsAttributes": {
+		"4566": {
+			"label": "MiniStack (AWS)",
+			"onAutoForward": "silent"
+		}
 	},	
-	"postCreateCommand": "chmod +x aws-cli-login.sh && chmod +x aws-cli-login-paste-credentials.sh && pip3 install boto3"
+	"postCreateCommand": "chmod +x aws-cli-login.sh && chmod +x aws-cli-login-paste-credentials.sh && pip3 install boto3",
+	"postStartCommand": "docker start ministack 2>/dev/null || docker run -d --name ministack -p 4566:4566 --restart unless-stopped ministackorg/ministack:latest && mkdir -p ~/.aws && echo '[default]\nregion = us-east-1\noutput = json\nendpoint_url = http://localhost:4566'> ~/.aws/config && echo '[default]\naws_access_key_id = test\naws_secret_access_key = test' > ~/.aws/credentials"
 }

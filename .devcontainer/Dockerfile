@@ -11,3 +11,4 @@ RUN apt-get update \
     && sudo apt-get install -y terraform \
     && sudo apt-get update
 
+RUN curl -fsSL https://get.docker.com | sh
