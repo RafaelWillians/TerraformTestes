@@ -27,5 +27,5 @@
 		}
 	},	
 	"postCreateCommand": "chmod +x aws-cli-login.sh && chmod +x aws-cli-login-paste-credentials.sh && pip3 install boto3",
-	"postStartCommand": "docker start ministack 2>/dev/null || docker run -d --name ministack -p 4566:4566 --restart unless-stopped ministackorg/ministack:latest && mkdir -p ~/.aws && echo '[default]\nregion = us-east-1\noutput = json\nendpoint_url = http://localhost:4566'> ~/.aws/config && echo '[default]\naws_access_key_id = test\naws_secret_access_key = test' > ~/.aws/credentials"
+	"postStartCommand": "bash .devcontainer/start.sh"
 }
