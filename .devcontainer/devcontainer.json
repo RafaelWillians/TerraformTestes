@@ -26,6 +26,6 @@
 			"onAutoForward": "silent"
 		}
 	},	
-	"postCreateCommand": "chmod +x aws-cli-login.sh && chmod +x aws-cli-login-paste-credentials.sh && pip3 install boto3",
+	"postCreateCommand": "chmod +x aws-cli-login.sh aws-cli-login-paste-credentials.sh 2>/dev/null || true && pip3 install boto3",
 	"postStartCommand": "bash .devcontainer/start.sh"
 }
