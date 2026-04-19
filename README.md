@@ -1,10 +1,14 @@
-# AWS Repo Template
+# Testes com Terraform
 
-Repo template for use with AWS CLI, compatible with Codespaces, GitPod and DevContainer extension (for VSCode).
+Repositório com exemplos e testes usando Terraform.
+Via GitHub Codespaces, ambiente é pronto para usar com Ministack e AWS CLI.
 
-Template de repositório para usar com AWS CLI, compatível com Codespaces, GitPod e extensão DevContainer (para VSCode).
+## Exemplos
+### [EC2](/terraform/ec2/)
+### [Diversos](/terraform/exemplos-diversos/)
 
-## Extensões
+## Extensões e complementos
+* Ministack
 * AWS CLI
 * Draw.io Integration
 * Git Graph
