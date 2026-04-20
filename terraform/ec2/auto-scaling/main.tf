@@ -27,16 +27,17 @@ resource "aws_security_group" "instance" {
     }
 }
 
-resource "aws_launch_configuration" "exemplo" {
+resource "aws_launch_template" "exemplo" {
     image_id = "ami-1234"
     instance_type = "t2.micro"
-    security_groups = [aws_security_group.instance.id]
+    vpc_security_group_ids = [aws_security_group.instance.id]
 
-    user_data = <<-EOF
+    user_data = base64encode(<<-EOF
         #!/bin/bash
         echo "Hello, world" > index.html
         nohub busybox httpd -f -p ${var.server_port} &
         EOF
+    )
 
     lifecycle {
       create_before_destroy = true
@@ -44,7 +45,6 @@ resource "aws_launch_configuration" "exemplo" {
 }
 
 resource "aws_autoscaling_group" "exemplo" {
-    launch_configuration = aws_launch_configuration.exemplo.name
     vpc_zone_identifier = data.aws_subnets.default.ids
 
     target_group_arns = [aws_lb_target_group.asg.arn]
@@ -52,6 +52,11 @@ resource "aws_autoscaling_group" "exemplo" {
 
     min_size = 3
     max_size = 10
+
+    launch_template {
+      id = aws_launch_template.exemplo.id
+      version = "$Latest"
+    }
 
     tag {
         key = "Name"
